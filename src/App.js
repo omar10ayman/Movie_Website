@@ -1,25 +1,45 @@
-import logo from './logo.svg';
+import { Route, Routes, useNavigate ,Navigate} from 'react-router-dom';
 import './App.css';
-
+import Navbar from './Components/Navbar';
+import Home from './Components/Home';
+import  Resister from './Components/Resister';
+import Login from './Components/Login';
+import Movies from './Components/Movies';
+import MovieDetails from './Components/MovieDetails';
+import TVShows from './Components/Tvshow';
+import AddFav from './Components/AddFav';
 function App() {
+  const naviagte= useNavigate()
+  const getfromLacal=JSON.parse(localStorage.getItem("userArr"))
+  const getfromSession=JSON.parse(sessionStorage.getItem("user"))
+  function logOut(){
+    sessionStorage.removeItem("user");
+    naviagte("/login");
+  }
+  function ProdectedRoute(props){
+    if(getfromSession===null){
+      return <Navigate to={"/login"}/>
+    }else{
+      return props.children
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <Navbar getfromLacal={getfromLacal}  getfromSession={getfromSession} logOut={logOut}/>
+    <div className="container-fluid h-100" >
+    <Routes>
+      <Route path='/' element={<ProdectedRoute><Home/></ProdectedRoute>} />
+      <Route path='/home' element={<ProdectedRoute><Home/></ProdectedRoute>} />
+      <Route path='/movies' element={<ProdectedRoute><Movies/></ProdectedRoute>} />
+      <Route path='/tv' element={<ProdectedRoute><TVShows/></ProdectedRoute>} />
+      <Route path='/addfav' element={<ProdectedRoute><AddFav/></ProdectedRoute>} />
+      <Route path='/moviedetiels/:id' element={<ProdectedRoute><MovieDetails/></ProdectedRoute>} />
+      <Route path='/Resister' element={<Resister getfromLacal={getfromLacal}/>} />
+      <Route path='/login' element={<Login getfromLacal={getfromLacal} getfromSession={getfromSession}/>} />
+    </Routes>
     </div>
-  );
+    </>
+  )
 }
 
 export default App;
