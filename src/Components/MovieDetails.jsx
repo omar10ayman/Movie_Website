@@ -13,8 +13,8 @@ export default function MovieDetails() {
         getMovieDetails()
     },[])
   return (
-    moviedetiels ? <div className='container'>
-        <div className="row justify-content-center align-items-center ">
+    moviedetiels ? <div className='container vh-100 align-items-center justify-content-center d-flex'>
+        <div className="row">
             <div className="col-md-3">
                 <img className='w-100' src={'http://image.tmdb.org/t/p/w500'+moviedetiels.poster_path} alt="" />
             </div>
@@ -23,7 +23,7 @@ export default function MovieDetails() {
                 <p className=' text-white opacity-50 my-5'>{moviedetiels.overview}</p>
                 <ul>
                     <li>
-                    Budgets: {moviedetiels.budget}
+                    Budgets: {moviedetiels.budget}$
                     </li>
                     <li>
                     Date: {moviedetiels.release_date}

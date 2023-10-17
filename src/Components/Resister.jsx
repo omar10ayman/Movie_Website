@@ -64,14 +64,14 @@ export default function Resister({getfromLacal}) {
             last_name:Joi.string().alphanum().min(3).max(10).required(),
             age:Joi.number().min(16).max(80).required(),
             email:Joi.string().email({minDomainSegments:2,tlds:{allow:['com','net']}}).required(),
-            password:Joi.string().pattern(new RegExp('^[A-Z][a-z]{3,10}$')).required(),
+            password:Joi.string().pattern(new RegExp('[A-Z][a-z]{3,10}$')).required(),
         })
         return scheme.validate(user,{abortEarly:false})
     }
   return (
     <div className= ' w-75 h-100  m-auto'>
         {email && <div  className='alert py-2 alert-danger'>{email}</div> }
-        {error.map(error=> error.context.label==='password' ?<div key={error.context.key} className='alert py-2 alert-danger'>Password invalid</div> :<div key={error.context.key} className='alert py-2 alert-danger'>{error.message}</div>)}
+        {error.map(error=> error.context.label==='password' ?<div key={error.context.key} className='alert py-2 alert-danger'>Password must be (3-10) letters/ First letter is UpperCase </div> :<div key={error.context.key} className='alert py-2 alert-danger'>{error.message}</div>)}
         <h2 >Resister Now</h2>
     <form onSubmit={sumbitData}>
         <LabelInput type={"text"} label={"first_name"} labelName={"First Name"} onchange={getDate} />

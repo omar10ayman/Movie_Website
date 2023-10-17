@@ -8,6 +8,9 @@ import Movies from './Components/Movies';
 import MovieDetails from './Components/MovieDetails';
 import TVShows from './Components/Tvshow';
 import AddFav from './Components/AddFav';
+import MovieContextProvider from './store';
+import Footer from './Components/Footer';
+
 function App() {
   const naviagte= useNavigate()
   const getfromLacal=JSON.parse(localStorage.getItem("userArr"))
@@ -25,7 +28,8 @@ function App() {
   }
   return (
     <>
-    <Navbar getfromLacal={getfromLacal}  getfromSession={getfromSession} logOut={logOut}/>
+   <MovieContextProvider>
+ <Navbar getfromLacal={getfromLacal}  getfromSession={getfromSession} logOut={logOut}/>
     <div className="container-fluid h-100" >
     <Routes>
       <Route path='/' element={<ProdectedRoute><Home/></ProdectedRoute>} />
@@ -37,7 +41,9 @@ function App() {
       <Route path='/Resister' element={<Resister getfromLacal={getfromLacal}/>} />
       <Route path='/login' element={<Login getfromLacal={getfromLacal} getfromSession={getfromSession}/>} />
     </Routes>
+    <Footer/>
     </div>
+   </MovieContextProvider>
     </>
   )
 }

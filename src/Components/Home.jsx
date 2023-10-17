@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios';
+import React, { useContext } from 'react'
 import Card from '../resuseableCom/Card';
 import Hr from '../resuseableCom/Hr';
 import Loading from './Loading';
+import {movieContext}  from '../store';
 
-export default function Home() {
-  const [trendingMovies,settrendingMovies]=useState([])
-  const [trendingTv,settrendingTv]=useState([])
-  const [trendingPerson,settrendingPerson]=useState([])
-  const getDateFromApi = async (urlType,callArrSet)=>{
-   let {data}= await axios.get(`https://api.themoviedb.org/3/trending/${urlType}/week?api_key=1bc6b1c83095f7fe5720985c1c6814b7`)
-   callArrSet(data.results.slice(0,10))
-  }
-  getDateFromApi('movie',settrendingMovies)
-  getDateFromApi('tv',settrendingTv)
-  getDateFromApi('person',settrendingPerson)
-  
+export default function Home() {  
+  const{trendingMovies,trendingPerson,trendingTv,movies,tv}=useContext(movieContext)
   return (
   trendingMovies || trendingPerson || trendingTv ?   <div className='container'>
   <div className="row">
@@ -37,7 +27,7 @@ export default function Home() {
         marginTop:"25px",
       }}/>
     </div>
-    {trendingMovies.map(item=><Card key={item.id} id={item.id} title={item.title} poster_path={item.poster_path}/>)}
+    {movies?.slice(0,10).map(item=><Card key={item.id} id={item.id} title={item.title} poster_path={item.poster_path} isFav={item.isFav} id2={item.id2} vote_average={item.vote_average}/>)}
     <Hr/>
     <div className="col-md-4 my-3 d-flex flex-column justify-content-center ">
       <div style={{
@@ -57,7 +47,7 @@ export default function Home() {
         marginTop:"25px",
       }}/>
     </div>
-    {trendingTv.map(item=><Card key={item.id} id={item.id} title={item.name} poster_path={item.poster_path}/>)}
+    {tv?.slice(0,10).map(item=><Card key={item.id} id={item.id} title={item.name} poster_path={item.poster_path} isFav={item.isFav} id2={item.id2} vote_average={item.vote_average}/>)}
     <Hr/>
     <div className="col-md-4 my-3 d-flex flex-column justify-content-center py-3 ">
       <div style={{
@@ -77,7 +67,8 @@ export default function Home() {
         marginTop:"25px",
       }}/>
     </div>
-    {trendingPerson.map(item=><Card key={item.id} id={item.id} title={item.name} poster_path={item.profile_path}/>)}      </div>
+    {console.log(trendingPerson)}
+    {trendingPerson.map(item=><Card key={item.id} id={item.id} title={item.name} poster_path={item.profile_path} isFav={item.isFav} id2={item.id2} vote_average={item.popularity}/>)}</div>
 </div>:<Loading/>
   )
 }
