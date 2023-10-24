@@ -10,6 +10,8 @@ import TVShows from './Components/Tvshow';
 import AddFav from './Components/AddFav';
 import MovieContextProvider from './store';
 import Footer from './Components/Footer';
+import Search from './Components/Search';
+import ForgetPass from './Components/ForgetPass';
 
 function App() {
   const naviagte= useNavigate()
@@ -37,7 +39,9 @@ function App() {
       <Route path='/movies' element={<ProdectedRoute><Movies/></ProdectedRoute>} />
       <Route path='/tv' element={<ProdectedRoute><TVShows/></ProdectedRoute>} />
       <Route path='/addfav' element={<ProdectedRoute><AddFav/></ProdectedRoute>} />
+      <Route path='/search' element={<ProdectedRoute><Search/></ProdectedRoute>} />
       <Route path='/moviedetiels/:id' element={<ProdectedRoute><MovieDetails/></ProdectedRoute>} />
+      <Route path='/forget' element={<ForgetPass getfromLacal={getfromLacal}/>} />
       <Route path='/Resister' element={<Resister getfromLacal={getfromLacal}/>} />
       <Route path='/login' element={<Login getfromLacal={getfromLacal} getfromSession={getfromSession}/>} />
     </Routes>

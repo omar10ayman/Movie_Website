@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { movieContext } from '../store'
 
 export default function Navbar({logOut,getfromSession}) {
+  const {addfav} =useContext(movieContext)
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-transparent mb-4">
   <div className="container-fluid">
@@ -23,18 +25,18 @@ export default function Navbar({logOut,getfromSession}) {
         <Link className="nav-link active" aria-current="page" to={'/tv'}>Tvshow</Link>
         </li>
         <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to={'/addfav'}>Favourites</Link>
+        <Link className="nav-link active" aria-current="page" to={'/addfav'}>Favourites {addfav.length}</Link>
         </li>
         <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to={'/about'}>About</Link>
-        </li>
-        <li className="nav-item">
-        <Link className="nav-link active" aria-current="page" to={'/network'}>Network</Link>
+        <Link className="nav-link active" aria-current="page" to={'/search'}>Search</Link>
         </li>
     </>}
 
       
       </ul> 
+     {getfromSession && <li className="nav-item list-unstyled  mt-2 mx-4 ">
+          <h6>Hi {getfromSession?.name.toUpperCase()}</h6>
+        </li>}
       <ul className="navbar-nav mb-2 mb-lg-0">
       {getfromSession ?<>
         <li className="nav-item order-last">
@@ -42,12 +44,14 @@ export default function Navbar({logOut,getfromSession}) {
             cursor: 'pointer'
           }} onClick={logOut} className="nav-link active" aria-current="page" >Logout</span>
           </li>
+          
           <li className='nav-item d-flex align-items-center order-last  order-lg-first'>
                 <i className='fab mx-2 fa-facebook '></i>
                 <i className='fab mx-2 fa-instagram '></i>
                 <i className='fab mx-2 fa-twitter '></i>
                 <i className='fab mx-2 fa-soundcloud '></i>
             </li>
+           
       </>
 
           :

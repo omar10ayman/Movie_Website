@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import Joi from 'joi'
 import LabelInput from '../resuseableCom/LabelInput'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function Login({getfromLacal,getfromSession}) {
-  
     const [user,setUser]=useState({
         email:'',
         password:'',
-    })
+        })
     const [errorLocal,seterrorLocal]=useState('')
     const [error,setError]=useState([])
     const [isLoading,setLoading]=useState(false)
@@ -30,7 +29,8 @@ export default function Login({getfromLacal,getfromSession}) {
         else{
             if(getfromLacal?.find(o=>o.email===user.email && o.password===user.password)){
                 navigate("/home")
-                sessionStorage.setItem("user",JSON.stringify(user))
+                let x =getfromLacal.find(o=>o.email===user.email && o.password===user.password)
+                sessionStorage.setItem("user",JSON.stringify({...user,name:x.first_name}))
                 console.log(user)
                 setLoading(false)
             }
@@ -49,7 +49,7 @@ export default function Login({getfromLacal,getfromSession}) {
         return scheme.validate(user,{abortEarly:false})
     }
   return (
-    <div className= ' w-75 h-100  m-auto'>
+    <div className= ' w-75 vh-100  m-auto  '>
         {error.map(error=> error.context.label==='password' ?<div key={error.context.key} className='alert py-2 alert-danger'>Password invalid</div> :<div key={error.context.key} className='alert py-2 alert-danger'>{error.message}</div>)}
         {errorLocal!=='' ? <div className='alert py-2 alert-danger' >{errorLocal}</div>:''}
         <h2 >Login Now</h2>
@@ -57,7 +57,12 @@ export default function Login({getfromLacal,getfromSession}) {
         
         <LabelInput type={"email"} label={"email"} labelName={"Email"} onchange={getDate} />
         <LabelInput type={"password"} label={"password"} labelName={"Password"} onchange={getDate} />
-        <button className='btn btn-info' type='submit'>{isLoading===true ?<i className='fas fa-spinner fa-spin'></i> :"Login"}</button>
+        <Link style={{
+            textDecoration: 'none',
+            color: "white",
+            opacity:0.5
+        }} to={"/forget"}><p>forget password</p> </Link>
+        <button className='btn btn-outline-info' type='submit'>{isLoading===true ?<i className='fas fa-spinner fa-spin'></i> :"Login"}</button>
     </form>
     </div>
   )

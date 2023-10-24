@@ -69,7 +69,7 @@ export default function Resister({getfromLacal}) {
         return scheme.validate(user,{abortEarly:false})
     }
   return (
-    <div className= ' w-75 h-100  m-auto'>
+    <div className= ' w-75 vh-100  m-auto'>
         {email && <div  className='alert py-2 alert-danger'>{email}</div> }
         {error.map(error=> error.context.label==='password' ?<div key={error.context.key} className='alert py-2 alert-danger'>Password must be (3-10) letters/ First letter is UpperCase </div> :<div key={error.context.key} className='alert py-2 alert-danger'>{error.message}</div>)}
         <h2 >Resister Now</h2>
@@ -79,7 +79,7 @@ export default function Resister({getfromLacal}) {
         <LabelInput type={"email"} label={"email"} labelName={"Email"} onchange={getDate} />
         <LabelInput type={"number"} label={"age"} labelName={"Age"} onchange={getDate} />
         <LabelInput type={"password"} label={"password"} labelName={"Password"} onchange={getDate} />
-        <button className='btn btn-info' type='submit'>{isLoading===true ?<i className='fas fa-spinner fa-spin'></i> :"Submit"}</button>
+        <button className='btn btn-outline-info' type='submit'>{isLoading===true ?<i className='fas fa-spinner fa-spin'></i> :"Submit"}</button>
     </form>
     </div>
   )
